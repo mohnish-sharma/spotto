@@ -7,8 +7,6 @@
 
 Spotto is mobile application designed for automotive enthusiasts to share their sighting of rare, or interesting vehicles. Users will be able to capture photos, tagged with location data, and add some short detailed information about the cars they encounter in their day to day lives. The app creates a personal digital collection of spotted vehicles, with an option to contribute to a global database that users can access to browse finds and connect with fellow enthusiasts. 
 
-- Describe the main features of your app.    
-
 ## Main Features
 
 ### Photo Capture & Collection 
@@ -49,21 +47,7 @@ Spotto is mobile application designed for automotive enthusiasts to share their 
 
 
 
-
-
-
-
-
-
-
-
 ## Users Groups & Personas
-
-
-
-* Who are the users of your app? Describe user groups, consider  constructing user personas, describe how users will use your app and why they might choose it over competitors.
-
-
 
 ### Target User Groups
 
@@ -100,7 +84,7 @@ John would be able to use the app often, primarily using the documentation featu
 * Limited knowledge about vehicle specifications and makes
 * Currently just taking occasional photos stored in their camera roll without organisation
 
-Jane would be able to use the app's basic features, focusing on quick photo capture to organise cars they encounter by whatever category they define. She would also benefit educationally from the community features as she would learn car model and makes by descriptions posted from more mechanically inclined enthusiasts. 
+Jane would be able to use the app's basic features, focusing on quick photo capture to organise cars they encounter by whatever category they define. She would also benefit educationally from the community features as she would learn car model and makes by descriptions posted from more mechanically inclined enthusiasts. The privacy features would be important as she most likely would not prefer to disclose locations or photos publicly. 
 
 ## Wireframes & Mockups
 
@@ -136,3 +120,4 @@ The map interface will display spotting locations by using location data entered
 
 # MVP Features
 
+The Minimum Viable Product will focus on delivering a fully functional and appealing core experience, including all of the main features described, with the exception of authentication and security, as that is not  required for showcasing the main features and functionality of the app, but can be added at a later date when the product is ready for release. 
