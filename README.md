@@ -1,7 +1,5 @@
 # Mobile Application Development Project for COMP3130
 
-[toc]
-
 # Spotto
 
 *"Every car has a story. Let Spotto help you tell it"*

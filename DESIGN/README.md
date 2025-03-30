@@ -1,6 +1,5 @@
 # Mobile Application Development Project for COMP3130
 
-[toc]
 
 # Spotto
 
@@ -78,7 +77,7 @@ The home screen features a clean interface with quick access to the camera, pers
 
 ## Camera "Spotting" Interface
 
-![spotting_page](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/image_screen.png)
+<img src="https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/image_screen.png" alt="image_screen" style="zoom: 50%;" />
 
 The camera interface includes guides for framing pictures, camera options including flash, exposure and adjusting the framing grid, as well as quick access to swapping to video. After capturing a photo users will be directed to to the Detail Entry page where they can enter a few more details about the car they just spotted.
 
