@@ -2,13 +2,103 @@
 
 [toc]
 
+# Spotto
 
+*"Every car has a story. Let Spotto help you tell it"*
 
-- What is your app? Include a title, short 'tagline' and a 1-2 paragraph description of what your app will do.
+Spotto is mobile application designed for automotive enthusiasts to share their sighting of rare, or interesting vehicles. Users will be able to capture photos, tagged with location data, and add some short detailed information about the cars they encounter in their day to day lives. The app creates a personal digital collection of spotted vehicles, with an option to contribute to a global database that users can access to browse finds and connect with fellow enthusiasts. 
 
 - Describe the main features of your app.    
-- Who are the users of your app? Describe user groups, consider  constructing user personas, describe how users will use your app and why they might choose it over competitors.
-- Illustrate your app design with wireframes or mockups (generated with Figma). These should show both the visual design of your app and  how users will interact with it (eg. transitions between screens)  Present your design as screenshots      interspersed with text.
+
+## Main Features
+
+### Photo Capture & Collection 
+
+* Take images/videos of spotted vehicles via the app
+
+* Upload images/videos from user's camera roll
+
+* Create personal galleries/collection, with user defined names.
+
+### Posting 
+
+* Option to keep posts private, share with friends only
+* Colour, modifications, and special features tagging
+* Personal notes and observations
+
+### Feed 
+
+* Main feed where other user's public posts are visible
+* Ability to sort by new, top (as voted by other users, and showcased in community highlights)
+
+### Community 
+
+* Ability to create and customise personal user profiles
+* Follow other fellow users' accounts
+* Comment and like system on shared posts
+
+### Authentication & Security
+
+* Secured login for user accounts, either via email or social media login.
+* Privacy controls for location data
+* Integrated feature to blur license plates
+
+### Database Integration
+
+* Cloud storage for spotting posts
+* Synchronization across devices
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Users Groups & Personas
+
+
+
+* Who are the users of your app? Describe user groups, consider  constructing user personas, describe how users will use your app and why they might choose it over competitors.
+
+
+
+## Wireframes & Mockups
+
+## Home Screen
+
+![home_screen](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/home_screen.png)
+
+The home screen features a clean interface with quick access to the camera, personal collection, map view, as well as displaying recently contributed images. (the user can tap on each section to expand it).
+
+## Camera "Spotting" Interface
+
+![spotting_page](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/image_screen.png)
+
+The camera interface includes guides for framing pictures, camera options including flash, exposure and adjusting the framing grid, as well as quick access to swapping to video. After capturing a photo users will be directed to to the Detail Entry page where they can enter a few more details about the car they just spotted.
+
+## Detail Entry Page
+![detail_page](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/details_screen.png)
+
+The detail entry screen allows users to input vehicle information with fields of make, model, year, colour, modifications, any personal notes, and whether to include location data.
+
+## Collections Page
+
+![collections_page](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/collection_screen.png)
+
+The personal collection view can be toggled between grid, list and map representations to help with sorting through it. Each entry shows a small thumbnail and basic information, that can be expanded.
+
+## Map Page
+
+![map_page](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/map_screen.png)
+
+The map interface will display spotting locations by using location data entered by the user and displaying it in a visual format. Users will be able to search and filter by vehicle type, colour, etc.
+
 - Describe which parts of your design you will aim to implement for your MVP (or what you will leave out)
 
 
