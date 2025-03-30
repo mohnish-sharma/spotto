@@ -57,8 +57,6 @@ Spotto is mobile application designed for automotive enthusiasts to share their 
 
 
 
-
-
 ## Users Groups & Personas
 
 
@@ -66,6 +64,43 @@ Spotto is mobile application designed for automotive enthusiasts to share their 
 * Who are the users of your app? Describe user groups, consider  constructing user personas, describe how users will use your app and why they might choose it over competitors.
 
 
+
+### Target User Groups
+
+The target user group for this app will be:
+
+* Age range: 15+
+* All genders 
+* Automotive Enthusiasts
+  * With varying levels of technical knowledge
+  * Individuals with an interest in unique vehicles
+  * Tourists
+  * Social media influencers (ones that focus on automotive content of course)
+* Vehicle Collectors
+  * Documenting potential acquisitions
+  * Using this as a platform to showcase their portfolio
+
+
+
+### User Personas
+
+**John Doe - Dedicated Car Enthusiasts**
+
+* 20 year old student
+* Car spotting is a big hobby, often spend time at car meets or prime areas looking for interesting cars
+* Knowledgeable about vehicle specifications and makes
+* Currently mainly uses Instagram, but desires more organisation and real world application.
+
+John would be able to use the app often, primarily using the documentation features to record more detailed information about each vehicle spotted than Instagram would offer. The location features would help with planning routes through areas where unique and rare cars are commonly seen, and the community features would help John connect with other enthusiasts.
+
+**Jane Doe - Casual Observer**
+
+* 36 year old teacher
+* Casual interest in carspotting, perhaps taking pictures of unique vehicles during their daily commute
+* Limited knowledge about vehicle specifications and makes
+* Currently just taking occasional photos stored in their camera roll without organisation
+
+Jane would be able to use the app's basic features, focusing on quick photo capture to organise cars they encounter by whatever category they define. She would also benefit educationally from the community features as she would learn car model and makes by descriptions posted from more mechanically inclined enthusiasts. 
 
 ## Wireframes & Mockups
 
@@ -78,7 +113,6 @@ The home screen features a clean interface with quick access to the camera, pers
 ## Camera "Spotting" Interface
 
 ![spotting_page](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/image_screen.png)
-
 
 The camera interface includes guides for framing pictures, camera options including flash, exposure and adjusting the framing grid, as well as quick access to swapping to video. After capturing a photo users will be directed to to the Detail Entry page where they can enter a few more details about the car they just spotted.
 
@@ -100,14 +134,5 @@ The personal collection view can be toggled between grid, list and map represent
 
 The map interface will display spotting locations by using location data entered by the user and displaying it in a visual format. Users will be able to search and filter by vehicle type, colour, etc.
 
-- Describe which parts of your design you will aim to implement for your MVP (or what you will leave out)
+# MVP Features
 
-
-
-| **Criterion**                | **Unsatisfactory**   | **Basic**                                                 | **Better**                                                   | **Best**                                                     |
-| ---------------------------- | -------------------- | --------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| *App Description*            | Little or no detail. | Clear what the app will do but lacking detail.            | Great description of the app, convincing presentation        | Impressive description that integrates with other elements of this document. |
-| *User profiles and analysis* | Users? What users?   | Some thought about who will use the app.                  | Clear ideas about who will use it and what they will want/need. | Very clear how the user profiles have influenced the design of the app. |
-| *Visual Design*              | Messy or missing     | Functional visual design that might work as a basic demo. | Good design elements showing some thought about the app functionality. | Visual design that will work for this app and these users, impressive, beautiful! |
-| *Interaction Design*         | Confused or missing  | Basic interaction showing buttons and screens             | Clear how the interaction flows through the app and is facilitated by the design. | Your users will be impressed by how easy your app is to use. |
-| *Overall Presentation*       | Messy                | All present and kind of readable                          | Nice to look at, includes all required parts.                | Ready to give to VC for first round of funding!              |
