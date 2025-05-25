@@ -118,7 +118,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _buildSectionHeader('Account'),
                       const SizedBox(height: 16),
                       _buildActionItem('Sign Out', Icons.logout, () async {
-                        await FirebaseAuth.instance.signOut();
+                        try {
+                          // Sign out from Firebase
+                          await FirebaseAuth.instance.signOut();
+                          
+                          // Navigate to root to trigger auth state checking
+                          if (mounted) {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/', // Navigate to root/initial route
+                              (Route<dynamic> route) => false,
+                            );
+                          }
+                        } catch (e) {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error signing out: ${e.toString()}'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }
                       }, isDestructive: true),
                       const SizedBox(height: 32),
                     ],
