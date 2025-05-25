@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../navbar_widget.dart'; 
 class CollectionsScreen extends StatefulWidget {
   const CollectionsScreen({Key? key}) : super(key: key);
 
@@ -8,8 +8,6 @@ class CollectionsScreen extends StatefulWidget {
   State<CollectionsScreen> createState() => _CollectionsScreenState();
 }
 
-
-// PLACEHOLDER LIST FOR TO TEST UI BEFORE SETTING UP FIRESTORE
 class _CollectionsScreenState extends State<CollectionsScreen> {
   String _selectedView = 'Grid';
   final TextEditingController _searchController = TextEditingController();
@@ -99,46 +97,8 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
             Expanded(
               child: _buildContent(),
             ),
-            // Bottom Navigation Bar
-            Container(
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, -3),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildNavItem(Icons.home, 'Home', false, context),
-                  _buildNavItem(Icons.map, 'Map', false, context),
-                  Transform.translate(
-                    offset: const Offset(6, 0.0), 
-                    child: Container(
-                      width: 60,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[500],
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                  _buildNavItem(Icons.menu, 'Collections', true, context), // Active state
-                  _buildNavItem(Icons.person, 'Profile', false, context),
-                ],
-              ),
-            ),
+           
+            const CustomBottomNavBar(currentIndex: 2), 
           ],
         ),
       ),
@@ -285,35 +245,6 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
             style: TextStyle(
               fontSize: 18,
               color: Colors.grey[600],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Navigation bar item builder
-  Widget _buildNavItem(IconData icon, String label, bool isActive, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (label == 'Home') {
-          Navigator.pop(context); 
-        }
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: isActive ? Colors.black : Colors.grey[400],
-            size: 40,
-          ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: TextStyle(
-              color: isActive ? Colors.black : Colors.grey[400],
-              fontSize: 12,
             ),
           ),
         ],
