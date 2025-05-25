@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import '../navbar_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -11,7 +13,10 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final User? currentUser = FirebaseAuth.instance.currentUser;
-  
+
+  int _totalSpots = 0;
+  List<Map<String, dynamic>> _recentCars = [];
+
   String get username {
     if (currentUser?.email != null) {
       final email = currentUser!.email!;
@@ -22,7 +27,136 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
     return 'User';
   }
-  
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTotalSpots();
+  }
+
+  Future<void> _fetchTotalSpots() async {
+    try {
+      final snapshot = await FirebaseFirestore.instance.collection('cars').get();
+      setState(() {
+        _totalSpots = snapshot.docs.length;
+        _recentCars = snapshot.docs.map((doc) => doc.data()).toList();
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+  String _formatTimestampShort(dynamic timestamp) {
+    if (timestamp == null || timestamp is! Timestamp) {
+      return 'Unknown time';
+    }
+    
+    final DateTime dateTime = timestamp.toDate();
+    final DateTime now = DateTime.now();
+    
+    if (DateFormat('yyyy-MM-dd').format(now) == DateFormat('yyyy-MM-dd').format(dateTime)) {
+      return DateFormat('h:mm a').format(dateTime);
+    } else if (now.difference(dateTime).inDays < 7) {
+      return DateFormat('E h:mm a').format(dateTime); 
+    } else {
+      return DateFormat('MMM d').format(dateTime);
+    }
+  }
+
+  Widget _buildCarListItem(Map<String, dynamic> car) {
+    final timestamp = car['timestamp'];
+    final formattedTime = _formatTimestampShort(timestamp);
+    
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      elevation: 2,
+      child: ListTile(
+        leading: Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: car['imageUrl'] != null
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    car['imageUrl'],
+                    fit: BoxFit.cover,
+                    width: 60,
+                    height: 60,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.broken_image),
+                  ),
+                )
+              : const Icon(Icons.image, color: Colors.black54),
+        ),
+        title: Text(
+          car['name'] ?? 'Unnamed',
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        subtitle: formattedTime.isNotEmpty
+            ? Text(
+                'Added $formattedTime',
+                style: TextStyle(color: Colors.grey[600]),
+              )
+            : const Text('Tap to view details'),
+        trailing: const Icon(Icons.arrow_forward_ios),
+      ),
+    );
+  }
+
+  Widget _buildCarGridItem(Map<String, dynamic> car) {
+    final timestamp = car['timestamp'];
+    final formattedTime = _formatTimestampShort(timestamp);
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: car['imageUrl'] != null
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      car['imageUrl'],
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      errorBuilder: (context, error, stackTrace) =>
+                          const Icon(Icons.broken_image),
+                    ),
+                  )
+                : const Center(child: Icon(Icons.image, size: 40, color: Colors.black54)),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          car['name'] ?? 'Unnamed',
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        if (formattedTime.isNotEmpty) ...[
+          const SizedBox(height: 2),
+          Text(
+            formattedTime,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[600],
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,19 +169,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: BoxDecoration(
                 color: Colors.blue[500],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Profile',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                      ),
-                    ),
-                  ],
+              child: const Center(
+                child: Text(
+                  'Profile',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                  ),
                 ),
               ),
             ),
@@ -97,35 +225,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-
-                            // PLACHOLDER - update when firestore is working correctly
-
-                            _buildStatItem('24', 'Total Spots'),
-                            _buildStatDivider(),
-                            _buildStatItem('8', 'This Week'),
+                            _buildStatItem('$_totalSpots', 'Total Spots'),
                           ],
                         ),
                       ),
                       const SizedBox(height: 32),
-                      _buildSectionHeader('Recent Activity'),
+                      _buildSectionHeader('Your Spots'),
                       const SizedBox(height: 16),
-                      _buildActivityItem('Toyota 86', 'Yesterday, 2:30 PM', Icons.camera_alt),
-                      const SizedBox(height: 12),
-                      _buildActivityItem('Porsche 911', 'Yesterday, 6:30 PM', Icons.camera_alt),
-                      const SizedBox(height: 12),
-                      _buildActivityItem('BMW 3', 'Yesterday, 7:20 PM', Icons.camera_alt),
+                      if (_recentCars.isEmpty)
+                        const Text('No cars found.')
+                      else
+                        Column(
+                          children: _recentCars.reversed.take(5).map((car) {
+                            return _buildCarListItem(car);
+                          }).toList(),
+                        ),
+                      
                       const SizedBox(height: 32),
                       _buildSectionHeader('Account'),
                       const SizedBox(height: 16),
                       _buildActionItem('Sign Out', Icons.logout, () async {
                         try {
-                          // Sign out from Firebase
                           await FirebaseAuth.instance.signOut();
-                          
-                          // Navigate to root to trigger auth state checking
                           if (mounted) {
                             Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/', // Navigate to root/initial route
+                              '/',
                               (Route<dynamic> route) => false,
                             );
                           }
@@ -175,14 +299,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildStatDivider() {
-    return Container(
-      height: 40,
-      width: 1,
-      color: Colors.grey[300],
-    );
-  }
-
   Widget _buildSectionHeader(String title) {
     return Align(
       alignment: Alignment.centerLeft,
@@ -192,55 +308,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
-      ),
-    );
-  }
-
-  Widget _buildActivityItem(String title, String subtitle, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(
-              icon,
-              color: Colors.black87,
-              size: 20,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
