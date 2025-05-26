@@ -278,7 +278,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                     const SizedBox(height: 2),
                                     Text(
-                                      car['submittedBy'] ?? 'Anonymous User',
+                                      car['userName'] ?? 
+                                      (car['userEmail'] != null ? car['userEmail'].split('@')[0] : null) ?? 
+                                      'Anonymous User',
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
@@ -383,60 +385,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             : const Text('Tap to view details'),
         trailing: const Icon(Icons.arrow_forward_ios),
-      ),
-    );
-  }
-
-  Widget _buildCarGridItem(DocumentSnapshot carDoc) {
-    final car = carDoc.data() as Map<String, dynamic>;
-    final timestamp = car['timestamp'];
-    final formattedTime = _formatTimestampShort(timestamp);
-    
-    return GestureDetector(
-      onTap: () => _showCarDetailsModal(car, carDoc.id),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: car['imageUrl'] != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        car['imageUrl'],
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.broken_image),
-                      ),
-                    )
-                  : const Center(child: Icon(Icons.image, size: 40, color: Colors.black54)),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            car['name'] ?? 'Unnamed',
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          if (formattedTime.isNotEmpty) ...[
-            const SizedBox(height: 2),
-            Text(
-              formattedTime,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ],
       ),
     );
   }
