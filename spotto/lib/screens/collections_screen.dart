@@ -12,13 +12,6 @@ class CollectionsScreen extends StatefulWidget {
 
 class _CollectionsScreenState extends State<CollectionsScreen> {
   String _selectedView = 'Grid';
-  final TextEditingController _searchController = TextEditingController();
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
 
   String _formatTimestampShort(dynamic timestamp) {
     if (timestamp == null || timestamp is! Timestamp) {
@@ -330,27 +323,11 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                 children: [
                   const Center(
                     child: Text(
-                      'My Collection',
+                      'Community Spots',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: const InputDecoration(
-                        hintText: 'Search',
-                        prefixIcon: Icon(Icons.search, color: Colors.grey),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       ),
                     ),
                   ),

@@ -31,18 +31,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchTotalSpots();
+    _fetchUserSpots();
   }
 
-  Future<void> _fetchTotalSpots() async {
+  Future<void> _fetchUserSpots() async {
+    if (currentUser == null) return;
+    
     try {
-      final snapshot = await FirebaseFirestore.instance.collection('cars').get();
+      final snapshot = await FirebaseFirestore.instance
+          .collection('cars')
+          .where('userEmail', isEqualTo: currentUser!.email)
+          .get();
+      
       setState(() {
         _totalSpots = snapshot.docs.length;
         _recentCarDocs = snapshot.docs;
       });
     } catch (e) {
-      print('Error fetching data: $e');
+      print('Error fetching user spots: $e');
+      try {
+        final snapshot = await FirebaseFirestore.instance
+            .collection('cars')
+            .where('userId', isEqualTo: currentUser!.uid)
+            .get();
+        
+        setState(() {
+          _totalSpots = snapshot.docs.length;
+          _recentCarDocs = snapshot.docs;
+        });
+      } catch (e2) {
+        print('Error fetching user spots by userId: $e2');
+      }
     }
   }
 
@@ -457,7 +476,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            _buildStatItem('$_totalSpots', 'Total Spots'),
+                            _buildStatItem('$_totalSpots', 'Your Spots'),
                           ],
                         ),
                       ),
@@ -465,7 +484,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _buildSectionHeader('Your Spots'),
                       const SizedBox(height: 16),
                       if (_recentCarDocs.isEmpty)
-                        const Text('No cars found.')
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[50],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.directions_car_outlined,
+                                size: 48,
+                                color: Colors.grey[400],
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                'No spots yet!',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Start spotting cars to see them here',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[500],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       else
                         Column(
                           children: _recentCarDocs.reversed.take(5).map((carDoc) {

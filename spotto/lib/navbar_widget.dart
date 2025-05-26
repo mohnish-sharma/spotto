@@ -60,7 +60,7 @@ class CustomBottomNavBar extends StatelessWidget {
               ),
             ),
           ),
-          _buildNavItem(Icons.menu, 'Collections', 2, context),
+          _buildNavItem(Icons.menu, 'Community', 2, context),
           _buildNavItem(Icons.person, 'Profile', 3, context),
         ],
       ),
@@ -115,7 +115,7 @@ class CustomBottomNavBar extends StatelessWidget {
         break;
       case 'Map':
         break;
-      case 'Collections':
+      case 'Community':
         if (currentIndex != 2) {
           Navigator.pushReplacement(
             context,
