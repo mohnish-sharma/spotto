@@ -3,6 +3,7 @@ import 'screens/collections_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/spotto_home_screen.dart';
 import 'screens/car_creation_screen.dart';
+import 'screens/map_screen.dart'; 
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -114,6 +115,12 @@ class CustomBottomNavBar extends StatelessWidget {
         }
         break;
       case 'Map':
+        if (currentIndex != 1) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MapScreen()),
+          );
+        }
         break;
       case 'Community':
         if (currentIndex != 2) {
