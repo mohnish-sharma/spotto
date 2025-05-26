@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -157,6 +158,14 @@ class _CarCreationScreenState extends State<CarCreationScreen> {
       return;
     }
 
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please sign in to add a car')),
+      );
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
@@ -169,15 +178,18 @@ class _CarCreationScreenState extends State<CarCreationScreen> {
         'description': _descriptionController.text.trim(),
         'imageUrl': imageUrl,
         'timestamp': Timestamp.fromDate(_selectedDateTime),
+        'userId': currentUser.uid,
+        'userEmail': currentUser.email ?? 'Anonymous User',
+        'userName': currentUser.email?.split('@')[0] ?? 'Anonymous User', 
       });
 
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Image added successfully!')),
+        const SnackBar(content: Text('Car added successfully!')),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error saving image: $e')),
+        SnackBar(content: Text('Error saving car: $e')),
       );
     } finally {
       setState(() {

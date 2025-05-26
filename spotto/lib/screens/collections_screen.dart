@@ -253,7 +253,7 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                                     ),
                                     const SizedBox(height: 2),
                                     Text(
-                                      car['submittedBy'] ?? 'Anonymous User',
+                                      car['userName'] ?? car['userEmail']?.split('@')[0] ?? 'Anonymous User',
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
