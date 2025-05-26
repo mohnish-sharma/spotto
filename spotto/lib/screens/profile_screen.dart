@@ -326,7 +326,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Car ID',
+                                      'Photo ID',
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey.shade600,

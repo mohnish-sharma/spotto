@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import '../navbar_widget.dart';
 
@@ -37,6 +38,31 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
     
     final DateTime dateTime = timestamp.toDate();
     return DateFormat('MMMM d, yyyy \'at\' h:mm a').format(dateTime);
+  }
+
+  Future<void> _toggleVote(String carId, Map<String, dynamic> car) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final carRef = FirebaseFirestore.instance.collection('cars').doc(carId);
+    final votedBy = List<String>.from(car['votedBy'] ?? []);
+    final currentVotes = car['votes'] ?? 0;
+
+    try {
+      if (votedBy.contains(user.uid)) {
+        await carRef.update({
+          'votes': currentVotes - 1,
+          'votedBy': FieldValue.arrayRemove([user.uid]),
+        });
+      } else {
+        await carRef.update({
+          'votes': currentVotes + 1,
+          'votedBy': FieldValue.arrayUnion([user.uid]),
+        });
+      }
+    } catch (e) {
+      print('Error voting: $e');
+    }
   }
 
   void _showCarDetailsModal(Map<String, dynamic> car, String carId) {
@@ -120,14 +146,66 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                     ),
                     const SizedBox(height: 24),
                     
-
-                    Text(
-                      car['name'] ?? 'Unnamed Car',
-                      style: const TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            car['name'] ?? 'Unnamed Car',
+                            style: const TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        StreamBuilder<DocumentSnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('cars')
+                              .doc(carId)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const SizedBox();
+                            }
+                            
+                            final updatedCar = snapshot.data!.data() as Map<String, dynamic>? ?? {};
+                            final votes = updatedCar['votes'] ?? 0;
+                            final votedBy = List<String>.from(updatedCar['votedBy'] ?? []);
+                            final user = FirebaseAuth.instance.currentUser;
+                            final hasVoted = user != null && votedBy.contains(user.uid);
+                            
+                            return Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () => _toggleVote(carId, updatedCar),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: hasVoted ? Colors.blue.shade500 : Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: Icon(
+                                      Icons.thumb_up,
+                                      color: hasVoted ? Colors.white : Colors.grey.shade600,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  votes.toString(),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade700,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     
@@ -273,7 +351,7 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Car ID',
+                                      'Photo ID',
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey.shade600,

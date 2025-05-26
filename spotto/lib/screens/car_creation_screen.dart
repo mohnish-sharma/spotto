@@ -181,6 +181,9 @@ class _CarCreationScreenState extends State<CarCreationScreen> {
         'userId': currentUser.uid,
         'userEmail': currentUser.email ?? 'Anonymous User',
         'userName': currentUser.email?.split('@')[0] ?? 'Anonymous User', 
+        'submittedBy': currentUser.email?.split('@')[0] ?? 'Anonymous User', 
+        'votes': 0, 
+        'votedBy': [], 
       });
 
       Navigator.of(context).pop();
