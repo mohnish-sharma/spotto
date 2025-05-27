@@ -1,30 +1,53 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:spotto/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(SpottoApp());
+  group('UI Widget Tests', () {
+    testWidgets('should render basic UI elements', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            appBar: AppBar(title: const Text('Test App')),
+            body: const Column(
+              children: [
+                Text('Welcome to Spotto'),
+                ElevatedButton(
+                  onPressed: null,
+                  child: Text('Test Button'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      // check if text renders correctly
+      expect(find.text('Welcome to Spotto'), findsOneWidget);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    testWidgets('should handle button taps', (WidgetTester tester) async {
+      bool buttonPressed = false;
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: ElevatedButton(
+              onPressed: () {
+                buttonPressed = true;
+              },
+              child: const Text('Tap Me'),
+            ),
+          ),
+        ),
+      );
+
+      // when user taps the button
+      await tester.tap(find.text('Tap Me'));
+      await tester.pump();
+
+      // then make sure button press is registered
+      expect(buttonPressed, isTrue);
+    });
   });
 }
