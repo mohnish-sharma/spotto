@@ -2,7 +2,10 @@
 
 # Spotto
 
-![logo](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/logo.png)
+<p align="center">
+  <img src="https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/logo.png?raw=true" alt="logo" />
+</p>
+
 Logo from ![Iconduck.](https://iconduck.com/icons/19815/binoculars)
 Converted with ![appicon.](https://www.appicon.co)
 *"Every car has a story. Let Spotto help you tell it"*
@@ -68,8 +71,10 @@ Spotto is mobile application designed for automotive enthusiasts to share their 
 > Ensures view selection modes (on the collections page (grid, list, and map)) work correctly, and redirect to gridview as a default incase user's select an invalid option
 
 ## Screenshots:
-![sc1](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc1.png)
-![sc2](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc2.png)
-![sc3](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc3.png)
-![sc4](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc4.png)
-![sc5](https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc5.png)
+<p align="center">
+  <img src="https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc1.png?raw=true" alt="sc1" />
+  <img src="https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc2.png?raw=true" alt="sc2" />
+  <img src="https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc3.png?raw=true" alt="sc3" />
+  <img src="https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc4.png?raw=true" alt="sc4" />
+  <img src="https://github.com/MQ-COMP3130/mobile-application-development-mohnish-sharma/blob/main/images/sc5.png?raw=true" alt="sc5" />
+</p>
